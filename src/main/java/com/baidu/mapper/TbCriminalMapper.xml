@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baidu.mapper.TbCriminalMapper" >
+  <resultMap id="BaseResultMap" type="com.baidu.entity.TbCriminal" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="criminal_name" property="criminalName" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="criminal_age" property="criminalAge" jdbcType="INTEGER" />
+    <result column="criminal_sex" property="criminalSex" jdbcType="VARCHAR" />
+    <result column="criminal_desc" property="criminalDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, criminal_name, card_no, criminal_age, criminal_sex, criminal_desc
+  </sql>
+  
+  <select id="selectList" resultType="map">
+  select * from tb_criminal 
+  <where>
+  <if test="null != name and name != ''">
+  criminal_name like"%"#{name}"%"
+  </if>
+  </where>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_criminal
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_criminal
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baidu.entity.TbCriminal" >
+    insert into tb_criminal (cid, criminal_name, card_no, 
+      criminal_age, criminal_sex, criminal_desc
+      )
+    values (#{cid,jdbcType=INTEGER}, #{criminalName,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, 
+      #{criminalAge,jdbcType=INTEGER}, #{criminalSex,jdbcType=VARCHAR}, #{criminalDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.baidu.entity.TbCriminal" >
+    insert into tb_criminal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="criminalName != null" >
+        criminal_name,
+      </if>
+      <if test="cardNo != null" >
+        card_no,
+      </if>
+      <if test="criminalAge != null" >
+        criminal_age,
+      </if>
+      <if test="criminalSex != null" >
+        criminal_sex,
+      </if>
+      <if test="criminalDesc != null" >
+        criminal_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="criminalName != null" >
+        #{criminalName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalAge != null" >
+        #{criminalAge,jdbcType=INTEGER},
+      </if>
+      <if test="criminalSex != null" >
+        #{criminalSex,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalDesc != null" >
+        #{criminalDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baidu.entity.TbCriminal" >
+    update tb_criminal
+    <set >
+      <if test="criminalName != null" >
+        criminal_name = #{criminalName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        card_no = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalAge != null" >
+        criminal_age = #{criminalAge,jdbcType=INTEGER},
+      </if>
+      <if test="criminalSex != null" >
+        criminal_sex = #{criminalSex,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalDesc != null" >
+        criminal_desc = #{criminalDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baidu.entity.TbCriminal" >
+    update tb_criminal
+    set criminal_name = #{criminalName,jdbcType=VARCHAR},
+      card_no = #{cardNo,jdbcType=VARCHAR},
+      criminal_age = #{criminalAge,jdbcType=INTEGER},
+      criminal_sex = #{criminalSex,jdbcType=VARCHAR},
+      criminal_desc = #{criminalDesc,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>
